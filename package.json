@@ -11,6 +11,8 @@
     "server": "json-server --watch db.json --port 3001"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "@tanstack/react-query": "^5.90.18",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },
