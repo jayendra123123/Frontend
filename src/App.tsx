@@ -15,13 +15,45 @@ const App: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState<string>(Category.All);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isMobileArticleOpen, setIsMobileArticleOpen] = useState<boolean>(false);
+  const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768);
+
+  // Track window resize for mobile detection
+  React.useEffect(() => {
+    const handleResize = () => {
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+      if (!mobile) {
+        setIsMobileArticleOpen(false);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // Set first post as selected when posts are loaded
   React.useEffect(() => {
     if (posts.length > 0 && !selectedPostId) {
       setSelectedPostId(posts[0].id);
+      // Don't auto-open on mobile
+      if (!isMobile) {
+        setIsMobileArticleOpen(false);
+      }
     }
-  }, [posts, selectedPostId]);
+  }, [posts, selectedPostId, isMobile]);
+
+  // Handle post selection
+  const handlePostSelect = (postId: string) => {
+    setSelectedPostId(postId);
+    if (isMobile) {
+      setIsMobileArticleOpen(true);
+    }
+  };
+
+  // Handle closing mobile article
+  const handleCloseMobileArticle = () => {
+    setIsMobileArticleOpen(false);
+  };
 
   const filteredPosts = useMemo(() => {
     return posts.filter((post) => {
@@ -60,12 +92,17 @@ const App: React.FC = () => {
           posts={filteredPosts} 
           selectedPostId={selectedPostId} 
           activeCategory={activeCategory}
-          onPostSelect={setSelectedPostId}
+          onPostSelect={handlePostSelect}
           onCategorySelect={setActiveCategory}
           isLoading={isLoading}
         />
         
-        <ArticleView post={selectedPost} isLoading={isLoading} />
+        <ArticleView 
+          post={selectedPost} 
+          isLoading={isLoading}
+          onClose={handleCloseMobileArticle}
+          isMobile={isMobile && isMobileArticleOpen}
+        />
       </main>
 
       <Footer />

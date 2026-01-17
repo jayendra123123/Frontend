@@ -4,9 +4,11 @@ import type { Post } from '../types';
 interface ArticleViewProps {
   post: Post | null;
   isLoading: boolean;
+  onClose?: () => void;
+  isMobile?: boolean;
 }
 
-const ArticleView: React.FC<ArticleViewProps> = ({ post, isLoading }) => {
+const ArticleView: React.FC<ArticleViewProps> = ({ post, isLoading, onClose, isMobile }) => {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isSaved, setIsSaved] = useState(false);
 
@@ -99,8 +101,115 @@ const ArticleView: React.FC<ArticleViewProps> = ({ post, isLoading }) => {
     );
   }
 
+  // Mobile modal wrapper
+  if (isMobile && post) {
+    return (
+      <>
+        {/* Backdrop */}
+        <div 
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 md:hidden"
+          onClick={onClose}
+        ></div>
+        
+        {/* Modal */}
+        <section 
+          id="article-content-area" 
+          className="fixed inset-0 top-[60px] bg-background-light dark:bg-background-dark overflow-y-auto scroll-smooth z-50 md:hidden"
+        >
+          {/* Close Button */}
+          <button
+            onClick={onClose}
+            className="fixed top-[70px] right-4 z-50 w-10 h-10 rounded-full bg-white dark:bg-gray-800 shadow-lg flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+          >
+            <span className="material-symbols-outlined text-gray-600 dark:text-gray-300">close</span>
+          </button>
+          
+          {/* Progress Bar */}
+          <div className="sticky top-0 z-10 w-full h-1 bg-gray-100 dark:bg-gray-800">
+            <div className="bg-primary h-full transition-all duration-75" style={{ width: `${scrollProgress}%` }}></div>
+          </div>
+
+          <div className="max-w-[800px] mx-auto py-8 sm:py-12 px-4 sm:px-8">
+            {/* Breadcrumbs */}
+            <nav className="flex items-center gap-2 text-[10px] sm:text-xs font-medium text-gray-400 mb-6 sm:mb-8">
+              <a className="hover:text-primary transition-colors" href="#">Dashboard</a>
+              <span className="material-symbols-outlined text-[12px]">chevron_right</span>
+              <a className="hover:text-primary transition-colors" href="#">
+                {post.category[0] || 'Blog'}
+              </a>
+              <span className="material-symbols-outlined text-[12px]">chevron_right</span>
+              <span className="text-gray-600 dark:text-gray-300">Article View</span>
+            </nav>
+
+            {/* Article Header */}
+            <header className="mb-8 sm:mb-10">
+              <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
+                <div className="flex items-center gap-2 flex-wrap">
+                  {post.category.map((cat) => (
+                    <span 
+                      key={cat}
+                      className="px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-bold bg-primary/10 text-primary"
+                    >
+                      {cat}
+                    </span>
+                  ))}
+                </div>
+                <div className="h-4 w-px bg-gray-200 dark:bg-gray-700"></div>
+                <time className="text-[10px] sm:text-xs text-gray-400">{formatDate(post.date)}</time>
+              </div>
+              
+              <h1 className="heading-font text-2xl sm:text-4xl md:text-5xl font-bold leading-[1.1] mb-4 sm:mb-6 tracking-tight text-gray-900 dark:text-white">
+                {post.title}
+              </h1>
+
+              <p className="text-sm sm:text-lg text-gray-600 dark:text-gray-400 leading-relaxed mb-4 sm:mb-6">
+                {post.description}
+              </p>
+
+              <div className="flex items-center gap-3">
+                <button 
+                  onClick={handleShare}
+                  className="flex items-center gap-1 sm:gap-2 text-[10px] sm:text-xs font-bold text-gray-500 hover:text-primary transition-colors"
+                >
+                  <span className="material-symbols-outlined text-base sm:text-lg">share</span> Share
+                </button>
+                <button 
+                  onClick={handleSave}
+                  className={`flex items-center gap-1 sm:gap-2 text-[10px] sm:text-xs font-bold transition-colors ${
+                    isSaved ? 'text-primary' : 'text-gray-500 hover:text-primary'
+                  }`}
+                >
+                  <span className={`material-symbols-outlined text-base sm:text-lg ${isSaved ? 'fill' : ''}`}>
+                    {isSaved ? 'bookmark' : 'bookmark'}
+                  </span> 
+                  {isSaved ? 'Saved' : 'Save'}
+                </button>
+              </div>
+            </header>
+
+            {/* Cover Image */}
+            <div className="rounded-xl overflow-hidden mb-8 sm:mb-12 shadow-xl ring-1 ring-black/5 aspect-[21/9]">
+              <div 
+                className="w-full h-full bg-center bg-cover hover:scale-105 transition-transform duration-700" 
+                style={{ backgroundImage: `url('${post.coverImage}')` }}
+              ></div>
+            </div>
+
+            {/* Article Content */}
+            <article className="prose prose-sm sm:prose prose-slate dark:prose-invert max-w-none">
+              <div className="text-sm sm:text-base text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-wrap">
+                {post.content}
+              </div>
+            </article>
+          </div>
+        </section>
+      </>
+    );
+  }
+
+  // Desktop view
   return (
-    <section id="article-content-area" className="flex-1 bg-background-light dark:bg-background-dark overflow-y-auto scroll-smooth relative">
+    <section id="article-content-area" className="flex-1 bg-background-light dark:bg-background-dark overflow-y-auto scroll-smooth relative hidden md:block">
       {/* Progress Bar */}
       <div className="sticky top-0 z-10 w-full h-1 bg-gray-100 dark:bg-gray-800">
         <div className="bg-primary h-full transition-all duration-75" style={{ width: `${scrollProgress}%` }}></div>
