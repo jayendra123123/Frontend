@@ -106,9 +106,9 @@ const ArticleView: React.FC<ArticleViewProps> = ({ post, isLoading }) => {
         <div className="bg-primary h-full transition-all duration-75" style={{ width: `${scrollProgress}%` }}></div>
       </div>
 
-      <div className="max-w-[800px] mx-auto py-12 px-8">
+      <div className="max-w-[800px] mx-auto py-8 sm:py-12 px-4 sm:px-8">
         {/* Breadcrumbs */}
-        <nav className="flex items-center gap-2 text-xs font-medium text-gray-400 mb-8">
+        <nav className="flex items-center gap-2 text-[10px] sm:text-xs font-medium text-gray-400 mb-6 sm:mb-8">
           <a className="hover:text-primary transition-colors" href="#">Dashboard</a>
           <span className="material-symbols-outlined text-[12px]">chevron_right</span>
           <a className="hover:text-primary transition-colors" href="#">
@@ -119,44 +119,44 @@ const ArticleView: React.FC<ArticleViewProps> = ({ post, isLoading }) => {
         </nav>
 
         {/* Article Header */}
-        <header className="mb-10">
-          <div className="flex items-center gap-4 mb-6">
+        <header className="mb-8 sm:mb-10">
+          <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
             <div className="flex items-center gap-2 flex-wrap">
               {post.category.map((cat) => (
                 <span 
                   key={cat}
-                  className="px-3 py-1 rounded-full text-xs font-bold bg-primary/10 text-primary"
+                  className="px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-bold bg-primary/10 text-primary"
                 >
                   {cat}
                 </span>
               ))}
             </div>
             <div className="h-4 w-px bg-gray-200 dark:bg-gray-700"></div>
-            <time className="text-xs text-gray-400">{formatDate(post.date)}</time>
+            <time className="text-[10px] sm:text-xs text-gray-400">{formatDate(post.date)}</time>
           </div>
           
-          <h1 className="heading-font text-4xl md:text-5xl font-bold leading-[1.1] mb-6 tracking-tight text-gray-900 dark:text-white">
+          <h1 className="heading-font text-2xl sm:text-4xl md:text-5xl font-bold leading-[1.1] mb-4 sm:mb-6 tracking-tight text-gray-900 dark:text-white">
             {post.title}
           </h1>
 
-          <p className="text-lg text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
+          <p className="text-sm sm:text-lg text-gray-600 dark:text-gray-400 leading-relaxed mb-4 sm:mb-6">
             {post.description}
           </p>
 
           <div className="flex items-center gap-3">
             <button 
               onClick={handleShare}
-              className="flex items-center gap-2 text-xs font-bold text-gray-500 hover:text-primary transition-colors"
+              className="flex items-center gap-1 sm:gap-2 text-[10px] sm:text-xs font-bold text-gray-500 hover:text-primary transition-colors"
             >
-              <span className="material-symbols-outlined text-lg">share</span> Share
+              <span className="material-symbols-outlined text-base sm:text-lg">share</span> Share
             </button>
             <button 
               onClick={handleSave}
-              className={`flex items-center gap-2 text-xs font-bold transition-colors ${
+              className={`flex items-center gap-1 sm:gap-2 text-[10px] sm:text-xs font-bold transition-colors ${
                 isSaved ? 'text-primary' : 'text-gray-500 hover:text-primary'
               }`}
             >
-              <span className={`material-symbols-outlined text-lg ${isSaved ? 'fill' : ''}`}>
+              <span className={`material-symbols-outlined text-base sm:text-lg ${isSaved ? 'fill' : ''}`}>
                 {isSaved ? 'bookmark' : 'bookmark'}
               </span> 
               {isSaved ? 'Saved' : 'Save'}
@@ -165,7 +165,7 @@ const ArticleView: React.FC<ArticleViewProps> = ({ post, isLoading }) => {
         </header>
 
         {/* Cover Image */}
-        <div className="rounded-xl overflow-hidden mb-12 shadow-xl ring-1 ring-black/5 aspect-[21/9]">
+        <div className="rounded-xl overflow-hidden mb-8 sm:mb-12 shadow-xl ring-1 ring-black/5 aspect-[21/9]">
           <div 
             className="w-full h-full bg-center bg-cover hover:scale-105 transition-transform duration-700" 
             style={{ backgroundImage: `url('${post.coverImage}')` }}
@@ -173,8 +173,8 @@ const ArticleView: React.FC<ArticleViewProps> = ({ post, isLoading }) => {
         </div>
 
         {/* Article Content */}
-        <article className="prose prose-slate dark:prose-invert max-w-none">
-          <div className="text-base text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-wrap">
+        <article className="prose prose-sm sm:prose prose-slate dark:prose-invert max-w-none">
+          <div className="text-sm sm:text-base text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-wrap">
             {post.content}
           </div>
         </article>

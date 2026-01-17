@@ -28,11 +28,11 @@ const Sidebar: React.FC<SidebarProps> = ({
   };
 
   return (
-    <aside className="w-full md:w-[400px] flex flex-col border-r border-gray-200 dark:border-gray-800 bg-white dark:bg-background-dark/50 sticky top-0 h-screen overflow-y-auto shrink-0">
-      <div className="p-6 pb-2">
+    <aside className="w-full md:w-[400px] flex flex-col border-r border-gray-200 dark:border-gray-800 bg-white dark:bg-background-dark/50 md:sticky md:top-0 md:h-screen overflow-y-auto shrink-0">
+      <div className="p-4 sm:p-6 pb-2">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-bold heading-font">Recent Posts</h2>
-          <span className="text-xs font-semibold text-gray-400 uppercase tracking-widest">
+          <h2 className="text-base sm:text-lg font-bold heading-font">Recent Posts</h2>
+          <span className="text-[10px] sm:text-xs font-semibold text-gray-400 uppercase tracking-widest">
             {isLoading ? '...' : `${posts.length} Total`}
           </span>
         </div>
@@ -69,7 +69,7 @@ const Sidebar: React.FC<SidebarProps> = ({
             <div 
               key={post.id}
               onClick={() => onPostSelect(post.id)}
-              className={`p-6 border-b border-gray-100 dark:border-gray-800 cursor-pointer transition-all hover:bg-gray-50 dark:hover:bg-gray-800/50 ${
+              className={`p-4 sm:p-6 border-b border-gray-100 dark:border-gray-800 cursor-pointer transition-all hover:bg-gray-50 dark:hover:bg-gray-800/50 ${
                 selectedPostId === post.id ? 'border-l-4 border-l-primary bg-primary/5' : 'border-l-4 border-l-transparent'
               }`}
             >
@@ -77,7 +77,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                 {post.category.map((cat) => (
                   <span 
                     key={cat}
-                    className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${
+                    className={`px-2 py-0.5 rounded text-[9px] sm:text-[10px] font-bold uppercase ${
                       selectedPostId === post.id ? 'bg-primary/20 text-primary' : 'bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400'
                     }`}
                   >
@@ -85,10 +85,10 @@ const Sidebar: React.FC<SidebarProps> = ({
                   </span>
                 ))}
               </div>
-              <h3 className="text-base font-bold text-gray-900 dark:text-white leading-tight mb-2">
+              <h3 className="text-sm sm:text-base font-bold text-gray-900 dark:text-white leading-tight mb-2">
                 {post.title}
               </h3>
-              <p className="text-sm text-gray-500 dark:text-gray-400 line-clamp-2 leading-relaxed">
+              <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 line-clamp-2 leading-relaxed">
                 {post.description}
               </p>
               <div className="mt-4 flex items-center justify-between">

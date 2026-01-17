@@ -49,13 +49,13 @@ const App: React.FC = () => {
   }
 
   return (
-    <div className="flex flex-col min-h-screen bg-background-light dark:bg-background-dark">
+    <div className="flex flex-col min-h-screen bg-background-light dark:bg-background-dark overflow-x-hidden w-full">
       <Header 
         onCreateClick={() => setIsModalOpen(true)} 
         onSearch={setSearchQuery}
       />
       
-      <main className="flex-1 flex max-w-[1600px] mx-auto w-full">
+      <main className="flex-1 flex flex-col md:flex-row w-full">
         <Sidebar 
           posts={filteredPosts} 
           selectedPostId={selectedPostId} 

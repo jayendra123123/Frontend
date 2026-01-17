@@ -8,9 +8,7 @@ const Footer: React.FC = () => {
           {/* Brand Section */}
           <div className="col-span-2 sm:col-span-2 md:col-span-1">
             <div className="flex items-center gap-3 mb-4">
-              <div className="bg-primary p-1.5 rounded-lg text-white flex items-center justify-center">
-                <span className="material-symbols-outlined text-xl sm:text-2xl">auto_awesome</span>
-              </div>
+              <img src="/icon.png" alt="CA Monk Logo" className="w-10 h-10 rounded-lg" />
               <h2 className="heading-font text-lg sm:text-xl font-bold text-white">CA Monk</h2>
             </div>
             <p className="text-xs sm:text-sm leading-relaxed text-gray-400 max-w-xs">

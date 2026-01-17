@@ -9,17 +9,15 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ onCreateClick, onSearch }) => {
   return (
     <header className="sticky top-0 z-50 w-full bg-white/95 dark:bg-background-dark/95 backdrop-blur-md shadow-lg">
-      <div className="max-w-[1600px] mx-auto flex items-center justify-between px-6 py-3">
-        <div className="flex items-center gap-8">
-          <div className="flex items-center gap-3">
-            <div className="bg-primary p-1.5 rounded-lg text-white flex items-center justify-center">
-              <span className="material-symbols-outlined text-2xl">auto_awesome</span>
-            </div>
-            <h1 className="heading-font text-xl font-bold tracking-tight">CA Monk Blog</h1>
+      <div className="max-w-[1600px] mx-auto flex items-center justify-between px-4 sm:px-6 py-3">
+        <div className="flex items-center gap-4 sm:gap-8">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <img src="/icon.png" alt="CA Monk Logo" className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg" />
+            <h1 className="heading-font text-base sm:text-xl font-bold tracking-tight">CA Monk Blog</h1>
           </div>
         </div>
         
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 sm:gap-4">
           <div className="relative group hidden sm:block">
             <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">search</span>
             <input 
@@ -31,13 +29,14 @@ const Header: React.FC<HeaderProps> = ({ onCreateClick, onSearch }) => {
           </div>
           <button 
             onClick={onCreateClick}
-            className="flex items-center gap-2 bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg text-sm font-bold transition-all shadow-sm active:scale-95"
+            className="flex items-center gap-1 sm:gap-2 bg-primary hover:bg-primary/90 text-white px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-bold transition-all shadow-sm active:scale-95"
           >
             <span className="material-symbols-outlined text-sm">add</span>
-            <span>Create New Blog</span>
+            <span className="hidden sm:inline">Create New Blog</span>
+            <span className="sm:hidden">New</span>
           </button>
           <div 
-            className="h-10 w-10 rounded-full bg-cover bg-center border-2 border-white dark:border-gray-700 shadow-sm cursor-pointer" 
+            className="h-8 w-8 sm:h-10 sm:w-10 rounded-full bg-cover bg-center border-2 border-white dark:border-gray-700 shadow-sm cursor-pointer" 
             style={{ backgroundImage: `url('https://picsum.photos/100/100?random=10')` }}
           ></div>
         </div>
